@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="description" content="Simulate a digital voting experience with this simple EVM-style web app.">
+   <meta name="author" content="Anant Prakash Gupta">
+   <meta property="og:title" content="Election EVM Machine Simulation" />
+   <meta property="og:description" content="Try out a simulation of India's EVM machine. Record votes, reset, and view results." />
+   <meta property="og:type" content="website" />
+   <meta property="og:url" content="https://anantprakashgupta.github.io/bihar-election-evm/" />
+   <meta property="og:image" content="favicon.ico" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+   <title>Election EVM Machine</title>
+   <style>
+    body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #000000;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;  
+    flex-direction: column;
+}
+
+.evm-container {
+    width: 90%;
+    max-width: 400px;
+    background: #dddddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.led-indicator {
+    width: 15px;
+    height: 15px;
+    background-color: rgb(0, 255, 55);
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    overflow-x: auto;
+    display: block;
+    background-color: white;
+    border:inset;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    font-size: 14px;
+}
+
+th {
+    background-color: #f8f8f8;
+}
+
+.vote-btn {
+    padding: 10px 30px;
+    background-color: rgb(0, 0, 117);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
+    font-size: 14px;
+}
+
+.vote-btn:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.led {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(26, 53, 28);
+    border-radius: 50%;
+    margin: auto;
+}
+
+.reset-btn {
+    padding: 10px;
+    background-color: rgb(121, 16, 16);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.show-btn {
+    padding: 10px;
+    background-color: rgb(3, 129, 41);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; 
+    gap: 10px; 
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.message {
+    margin-top: 10px;
+    font-weight: bold;
+    color: green;
+}
+
+.warning {
+    color: red;
+}
+
+h6 {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+p {
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+@media screen and (max-width: 480px) {
+    .evm-container {
+        width: 94%;
+        padding: 15px;
+        border-radius: 10px;
+    }
+    .vote-btn, .reset-btn {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 6px;
+    }
+}
+   </style>
+</head>
+<body>
+   <div class="evm-container">
+       <div class="led-indicator" id="main-led"></div>
+       <h6 id="header"></h6>
+       <h6 id="header2"></h6>
+       <table>
+           <tbody id="candidates-list"></tbody>
+       </table>
+  
+       <div class="button-container">
+           <button class="reset-btn" onclick="resetVote()" >Reset Vote</button>
+           <!-- <button class="show-btn" onclick="window.location.href='/showResult.html'">Show Result</button> -->
+           <button class="show-btn" onclick="window.location.href='https://anantprakashgupta.github.io/bihar-election-evm/showResult.html'" >Show Result</button>
+       </div>
+       <p id="header3"></p>
+   </div>
+   <script src="script.js"></script>
+</body>
+</html>
